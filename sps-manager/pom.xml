@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.fengdu</groupId>
+		<artifactId>sps</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>sps-manager</artifactId>
+	<packaging>war</packaging>
+	<name>sps-manager Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.fengdu</groupId>
+			<artifactId>sps-common</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fengdu</groupId>
+			<artifactId>sps-shiro</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fengdu</groupId>
+			<artifactId>sps-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fengdu</groupId>
+			<artifactId>sps-gen</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fengdu</groupId>
+			<artifactId>sps-webchat</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fengdu</groupId>
+			<artifactId>sps-cms</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-digester</groupId>
+			<artifactId>commons-digester</artifactId>
+			<version>2.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.8.3</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-validator</groupId>
+			<artifactId>commons-validator</artifactId>
+			<version>1.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+	</dependencies>
+	<!-- -->
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<profiles.activation>dev</profiles.activation>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<profiles.activation>prod</profiles.activation>
+			</properties>
+		</profile>
+	</profiles>
+
+	<build>
+		<finalName>sps-manager</finalName>
+		<scriptSourceDirectory>src/main/java</scriptSourceDirectory>
+		<!-- -->
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<!-- **/*.properties ��ָ������Ŀ¼����Ŀ¼����properties���͵��ļ� -->
+				<!-- <includes> <include>**/*</include> </includes> �ų�dev��testĿ¼�µ��ļ� 
+					<excludes> <exclude>dev/*</exclude> <exclude>prod/*</exclude> </excludes> 
+					<includes> -->
+				<includes>
+					<include>**/*</include>
+				</includes>
+				<excludes>
+					<exclude>dev/*</exclude>
+					<exclude>prod/*</exclude>
+				</excludes>
+				<filtering>true</filtering>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<!--��������û��ָ����Ĭ��Ϊ activeByDefault ��ǩ�����profile -->
+				<includes>
+					<include>${profiles.activation}/*</include>
+				</includes>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<!-- <configuration> <warName>${profiles.activation}</warName> ����spring 
+					profile <webResources> <resource> <filtering>true</filtering> <directory>src/main/webapp</directory> 
+					<includes> <include>**/web.xml</include> </includes> </resource> </webResources> 
+					<warSourceDirectory>src/main/webapp</warSourceDirectory> <webXml>src/main/webapp/WEB-INF/web.xml</webXml> 
+					</configuration> -->
+			</plugin>
+		</plugins>
+	</build>
+</project>
